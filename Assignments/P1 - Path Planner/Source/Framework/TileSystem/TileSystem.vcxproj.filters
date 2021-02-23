@@ -7,6 +7,6 @@
   <ItemGroup>
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="..\platform.h" />
+    <ClInclude Include="TileMapUtility.h" />
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@ namespace ufl_cap4053 {
 		Tile** tiles;
 		double tile_radius;
 		unsigned int weight_sum_squared;
+		Tile *startTile, *goalTile;
 
 	public:
 		//! \brief Constructs a new <code>%TileMap</code> object.
@@ -41,6 +42,12 @@ namespace ufl_cap4053 {
 		//! \brief Destroys this <code>%TileMap</code> object.
 		DLLEXPORT ~TileMap();
 
+		//! \brief Sets the default starting tile for searches.
+		DLLEXPORT Tile* getStartTile();
+
+		//! \brief Sets the default goal tile for searches.
+		DLLEXPORT Tile* getGoalTile();
+
 		//! \brief Cleans up the underlying tiles and array memory.  Also zeroes the row count,
 		//! the column count, and the tile radius.
 		//!
@@ -53,6 +60,18 @@ namespace ufl_cap4053 {
 		//! The application must reset any search algorithms using this tile map after invoking
 		//! this method.
 		DLLEXPORT void createTileArray(int num_rows, int num_columns);
+
+		//! \brief Sets the default starting tile for a search.
+		//!
+		//! \param   row     the row-coordinate of the tile's location.
+		//! \param   column  the column-coordinate of the tile's location.
+		DLLEXPORT void setStartTile(int row, int column);
+
+		//! \brief Sets the default starting tile for a search.
+		//!
+		//! \param   row     the row-coordinate of the tile's location.
+		//! \param   column  the column-coordinate of the tile's location.
+		DLLEXPORT void setGoalTile(int row, int column);
 
 		//! \brief Sets the radius of the largest circle that can be circumscribed by a tile.
 		//!

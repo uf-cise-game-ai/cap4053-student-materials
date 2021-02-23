@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathPlannerLab.h" />
-    <ClInclude Include="PathPlannerUtility.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Resource\resource.h">
       <Filter>Resource Files</Filter>

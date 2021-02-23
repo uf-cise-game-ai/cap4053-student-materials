@@ -19,8 +19,8 @@
 #include <deque>
 #include <map>
 #include <functional>
-#include "PathPlannerUtility.h"
 #include "PathPlannerLab.h"
+#include "../TileSystem/TileMapUtility.h"
 
 std::vector<ufl_cap4053::Tile const*> tempSolution;
 
@@ -86,9 +86,7 @@ void setBounds(double const h_radius, int const row_count, int const column_coun
 	}
 }
 
-POINT* constructHexagon(double const radius, POINT const& offset) {
-	POINT hexagon[6];
-
+void constructHexagon(double const radius, POINT const& offset, POINT* hexagon) {
 	hexagon[0].x = hexagon[3].x = 0;
 	hexagon[4].x = hexagon[5].x = -(hexagon[1].x = hexagon[2].x = static_cast<LONG>(radius));
 
@@ -117,8 +115,6 @@ POINT* constructHexagon(double const radius, POINT const& offset) {
 		hexagon[i].x += offset.x;
 		hexagon[i].y += offset.y;
 	}
-
-	return hexagon;
 }
 
 void drawTileHighlight(Tile const* tile, POINT const& offset, double const radius, HBRUSH brush_handle, 
@@ -132,7 +128,8 @@ void drawTileHighlight(Tile const* tile, POINT const& offset, double const radiu
 	// Default = 30/radius + 1.05*radius
 	double const calculated_new_radius = ((radius_multiplier * 30) / radius) + ((radius_multiplier * 1.05) * radius);
 
-	POINT* end_point_hexagon = constructHexagon(calculated_new_radius, offset);
+	POINT end_point_hexagon[6];
+	constructHexagon(calculated_new_radius, offset, end_point_hexagon);
 	HRGN end_point_hex_region = CreatePolygonRgn(end_point_hexagon, 6, WINDING);
 
 	if (OffsetRgn(end_point_hex_region, x_offset, y_offset) != ERROR) {
@@ -145,7 +142,8 @@ void drawTileHighlight(Tile const* tile, POINT const& offset, double const radiu
 void drawGrid(TileMap const& tile_map, POINT const& offset, int grid_width, int grid_height, HDC device_context_handle)
 {
 	double const radius = tile_map.getTileRadius();
-	POINT* hexagon = constructHexagon(radius, offset);
+	POINT hexagon[6];
+	constructHexagon(radius, offset, hexagon);
 
 	if (HRGN hex_region = CreatePolygonRgn(hexagon, 6, WINDING))
 	{
@@ -1458,7 +1456,9 @@ void PathPlannerLab::openFile_(HWND window_handle, TCHAR* file_name)
 		current_planner_->resetSearch();
 		tempSolution.clear();
 
-		bool has_read = load(input_file_stream, ground_up_tile_map_);
+		bool has_read = loadTileMapFromStream(input_file_stream, ground_up_tile_map_);
+		PathPlannerGlobals::getInstance()->setGoalTile(ground_up_tile_map_.getGoalTile());
+		PathPlannerGlobals::getInstance()->setStartTile(ground_up_tile_map_.getStartTile());
 
 		if (has_read)
 		{

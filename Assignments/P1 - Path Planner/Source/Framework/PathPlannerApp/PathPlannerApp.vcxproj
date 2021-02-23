@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathPlannerLab.h" />
-    <ClInclude Include="PathPlannerUtility.h" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

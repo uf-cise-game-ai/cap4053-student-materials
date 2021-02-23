@@ -2,8 +2,7 @@
 
 namespace ufl_cap4053 {
 
-	TileMap::TileMap()
-		: row_count(0), column_count(0), tiles(0), tile_radius(0.0), weight_sum_squared(0)
+	TileMap::TileMap() : row_count(0), column_count(0), tiles(0), tile_radius(0.0), weight_sum_squared(0), startTile(nullptr), goalTile(nullptr)
 	{
 	}
 
@@ -61,6 +60,16 @@ namespace ufl_cap4053 {
 		reset();
 	}
 
+	Tile* TileMap::getStartTile()
+	{
+		return startTile;
+	}
+
+	Tile* TileMap::getGoalTile()
+	{
+		return goalTile;
+	}
+
 	void TileMap::reset()
 	{
 		if (tiles)
@@ -81,6 +90,17 @@ namespace ufl_cap4053 {
 		}
 
 		weight_sum_squared = 0;
+	}
+
+	void TileMap::setStartTile(int row, int column)
+	{
+		startTile = getTile(row, column);
+	}
+
+
+	void TileMap::setGoalTile(int row, int column)
+	{
+		goalTile = getTile(row, column);
 	}
 
 	void TileMap::setRadius(double radius)

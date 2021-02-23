@@ -68,9 +68,9 @@ struct PathPlannerGlobals
 	static const UINT SHOW_SEARCH_RUNNING = 1;
 
 	// friends
-	template <typename CharT, typename CharTraits> friend bool load(std::basic_istream<CharT, CharTraits>& input_stream, ufl_cap4053::TileMap& tile_map);
+	template <typename CharT, typename CharTraits> friend bool loadTimeMapFromStream(std::basic_istream<CharT, CharTraits>& input_stream, ufl_cap4053::TileMap& tile_map);
 	friend class GroundUpPathPlanner;
-
+	friend class PathPlannerLab;
 private:
 	// singleton instance
 	static PathPlannerGlobals* instance_;
